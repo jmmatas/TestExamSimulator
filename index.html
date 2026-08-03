@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Exam Simulator</title>
-  <script src="questions.js"></script>
+  <title id="page-title">Test Exam Simulator</title>
+  <script src="questions.json"></script>
   <script src="metadata.js"></script>
   <script src="config.js"></script>
   <script src="storage.js"></script>
@@ -1931,8 +1931,6 @@
       color: #ef6c00;
     }
 
-    /* Paleta genérica de dominios — se asigna por índice (domain-color-0..7),
-       válida para cualquier examen, no solo CIS-DF */
     .hf[class*="domain-color-"] {
       background: var(--surface);
       color: var(--muted);
@@ -2212,7 +2210,7 @@
 
   <header>
     <div class="logo">
-      <div class="logo-icon">📋</div><span id="hdr-app-name">CIS-DF Quiz</span>
+      <div class="logo-icon">📋</div><span id="hdr-app-name">Test Exam Simulator</span>
     </div>
     <div style="display:flex;align-items:center;gap:6px">
       <nav class="nav-tabs">
