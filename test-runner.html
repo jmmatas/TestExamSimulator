@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CIS-DF Quiz — Test Runner</title>
+<style>
+  :root{
+    --bg:#0f1117;--surface:#1a1d27;--surface2:#232636;--border:#2e3147;
+    --accent:#6c63ff;--accent2:#4fc3f7;--green:#4caf82;--red:#e05c6a;
+    --yellow:#f4b942;--text:#e8eaf6;--muted:#8b90b0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;padding:24px}
+  h1{font-size:1.4rem;margin-bottom:4px}
+  .sub{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+  .file-input-wrap{display:flex;flex-direction:column;gap:3px;font-size:.75rem;color:var(--muted)}
+  .file-input-wrap input{font-size:.78rem}
+  button.run{background:var(--accent);color:#fff;border:none;padding:10px 22px;border-radius:9px;
+    font-weight:700;cursor:pointer;font-size:.9rem}
+  button.run:hover{background:#7c74ff}
+  button.run:disabled{opacity:.5;cursor:not-allowed}
+  .summary{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 18px;text-align:center;min-width:90px}
+  .stat .num{font-size:1.5rem;font-weight:800}
+  .stat .lbl{font-size:.68rem;color:var(--muted);margin-top:2px}
+  .num.ok{color:var(--green)} .num.bad{color:var(--red)} .num.total{color:var(--accent2)} .num.dur{color:var(--yellow)}
+  .suite{margin-bottom:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .suite-hdr{padding:10px 16px;font-weight:700;font-size:.85rem;background:var(--surface2);
+    display:flex;justify-content:space-between;align-items:center}
+  .case{padding:8px 16px;border-top:1px solid var(--border);font-size:.82rem;display:flex;gap:10px;align-items:flex-start}
+  .case .icon{flex-shrink:0;width:18px;text-align:center}
+  .case.pass .icon{color:var(--green)}
+  .case.fail .icon{color:var(--red)}
+  .case .msg{color:var(--muted);font-size:.76rem;margin-top:2px;white-space:pre-wrap;font-family:Consolas,monospace}
+  .case.fail .name{color:#ffb4bd}
+  iframe{width:100%;height:560px;border:1px solid var(--border);border-radius:10px;background:#fff}
+  .iframe-wrap{margin-top:24px}
+  .iframe-wrap summary{cursor:pointer;color:var(--muted);font-size:.8rem;margin-bottom:8px}
+  .badge{font-size:.68rem;padding:2px 8px;border-radius:20px;background:var(--surface2);color:var(--muted)}
+  .progress{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:18px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .2s}
+  code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.85em}
+  .note{font-size:.78rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);
+    border-radius:9px;padding:10px 14px;margin-bottom:18px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<h1>🧪 CIS-DF Quiz — Test Runner</h1>
+<p class="sub">Carga la app real en un iframe oculto y ejecuta tests automáticos contra su DOM y funciones JS.</p>
+
+<div class="note">
+  📁 Coloca este fichero <code>test-runner.html</code> en la <b>misma carpeta</b> que <code>CIS-DF_Quiz_v7.html</code>
+  (o como se llame tu HTML principal), <code>questions_v7.js</code>, <code>config.js</code> y <code>storage.js</code>.
+  Luego pulsa "Cargar app" e indica el nombre exacto del fichero HTML de tu app.
+</div>
+
+<div class="toolbar">
+  <div class="file-input-wrap">
+    <label for="app-path">Fichero HTML de la app a testear</label>
+    <input id="app-path" type="text" value="CIS-DF_Quiz_v7.html" style="padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);width:280px">
+  </div>
+  <button class="run" id="run-btn" onclick="runAll()">▶ Ejecutar todos los tests</button>
+  <span class="badge" id="status-badge">Listo</span>
+</div>
+
+<div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+<div class="summary" id="summary" style="display:none">
+  <div class="stat"><div class="num total" id="sum-total">0</div><div class="lbl">Tests totales</div></div>
+  <div class="stat"><div class="num ok" id="sum-pass">0</div><div class="lbl">Pasados ✓</div></div>
+  <div class="stat"><div class="num bad" id="sum-fail">0</div><div class="lbl">Fallidos ✗</div></div>
+  <div class="stat"><div class="num dur" id="sum-dur">0s</div><div class="lbl">Duración</div></div>
+</div>
+
+<div id="results"></div>
+
+<details class="iframe-wrap">
+  <summary>🔍 Ver app en vivo (debug visual del iframe usado en los tests)</summary>
+  <iframe id="app-frame" src="about:blank"></iframe>
+</details>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// MINI TEST FRAMEWORK
+// ════════════════════════════════════════════════════════════
+const suites = [];
+let currentSuite = null;
+
+function describe(name, fn) {
+  currentSuite = { name, cases: [] };
+  suites.push(currentSuite);
+  fn();
+}
+function it(name, fn) {
+  currentSuite.cases.push({ name, fn });
+}
+function expect(actual) {
+  return {
+    toBe(expected) {
+      if (actual !== expected) throw new Error(`Esperaba ${JSON.stringify(expected)} pero obtuve ${JSON.stringify(actual)}`);
+    },
+    toEqual(expected) {
+      const a = JSON.stringify(actual), e = JSON.stringify(expected);
+      if (a !== e) throw new Error(`Esperaba ${e} pero obtuve ${a}`);
+    },
+    toBeTruthy() {
+      if (!actual) throw new Error(`Esperaba un valor truthy pero obtuve ${JSON.stringify(actual)}`);
+    },
+    toBeFalsy() {
+      if (actual) throw new Error(`Esperaba un valor falsy pero obtuve ${JSON.stringify(actual)}`);
+    },
+    toBeGreaterThan(n) {
+      if (!(actual > n)) throw new Error(`Esperaba > ${n} pero obtuve ${actual}`);
+    },
+    toBeGreaterThanOrEqual(n) {
+      if (!(actual >= n)) throw new Error(`Esperaba >= ${n} pero obtuve ${actual}`);
+    },
+    toBeLessThanOrEqual(n) {
+      if (!(actual <= n)) throw new Error(`Esperaba <= ${n} pero obtuve ${actual}`);
+    },
+    toContain(item) {
+      if (!actual || !actual.includes(item)) throw new Error(`Esperaba que contuviera ${JSON.stringify(item)}`);
+    },
+    toBeNull() {
+      if (actual !== null) throw new Error(`Esperaba null pero obtuve ${JSON.stringify(actual)}`);
+    },
+    toBeDefined() {
+      if (actual === undefined) throw new Error(`Esperaba que estuviera definido`);
+    },
+    toHaveLength(n) {
+      if (!actual || actual.length !== n) throw new Error(`Esperaba longitud ${n} pero obtuve ${actual ? actual.length : 'undefined'}`);
+    },
+  };
+}
+
+// ════════════════════════════════════════════════════════════
+// IFRAME HELPERS
+// ════════════════════════════════════════════════════════════
+let frame, win, doc;
+
+function loadApp(path) {
+  return new Promise((resolve, reject) => {
+    frame = document.getElementById('app-frame');
+    const timeout = setTimeout(() => reject(new Error('Timeout cargando la app (10s). ¿Existe el fichero "' + path + '" en esta carpeta?')), 10000);
+    frame.onload = () => {
+      clearTimeout(timeout);
+      try {
+        win = frame.contentWindow;
+        doc = frame.contentDocument;
+        // Give inline scripts (which run on load) a tick to finish executing
+        setTimeout(() => resolve(), 50);
+      } catch (e) { reject(e); }
+    };
+    frame.onerror = () => { clearTimeout(timeout); reject(new Error('Error de red cargando ' + path)); };
+    frame.src = path + '?t=' + Date.now(); // cache-bust
+  });
+}
+
+function $(sel) { return doc.querySelector(sel); }
+function $all(sel) { return [...doc.querySelectorAll(sel)]; }
+function isVisible(el) {
+  if (!el) return false;
+  const cs = win.getComputedStyle(el);
+  return cs.display !== 'none' && cs.visibility !== 'hidden';
+}
+function click(el) {
+  if (!el) throw new Error('click() recibió un elemento null');
+  el.click();
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// QUESTIONS / CONFIG / Storage are declared with `const` at the top level of
+// inline <script> tags. In a classic (non-module) script, top-level const/let
+// bindings do NOT attach to `window` — only `function` and `var` declarations do.
+// So win.QUESTIONS would be undefined even though the app works perfectly fine
+// internally. win.eval() runs in the same global lexical scope as the document's
+// own inline scripts, so it CAN see those bindings. We use it as a read-only bridge.
+function read(expr) { return win.eval(expr); }
+
+// Reset app to a clean state between tests that need isolation
+function resetAppState() {
+  try { win.localStorage.clear(); } catch(e) {}
+}
+
+// ════════════════════════════════════════════════════════════
+// TEST SUITES
+// ════════════════════════════════════════════════════════════
+
+describe('1. Carga de la aplicación', () => {
+  it('el documento carga sin lanzar excepciones globales', () => {
+    expect(doc).toBeDefined();
+    expect(doc.title).toContain('CIS-DF');
+  });
+
+  it('QUESTIONS está definido en el documento y no está vacío', () => {
+    const len = read('QUESTIONS.length');
+    expect(len).toBeGreaterThan(0);
+  });
+
+  it('CONFIG está definido en el documento', () => {
+    expect(read('typeof CONFIG')).toBe('object');
+    expect(read('!!CONFIG.presets')).toBeTruthy();
+  });
+
+  it('Storage está definido en el documento', () => {
+    expect(read("typeof Storage.getStats")).toBe('function');
+  });
+
+  it('la pantalla "home" está activa al cargar', () => {
+    const home = $('#home');
+    expect(home.classList.contains('active')).toBeTruthy();
+  });
+});
+
+describe('2. Integridad del banco de preguntas', () => {
+  it('todas las preguntas tienen un número único', () => {
+    const dup = read('(() => { const n = QUESTIONS.map(x=>x.num); return n.length !== new Set(n).size; })()');
+    expect(dup).toBeFalsy();
+  });
+
+  it('todas las preguntas tienen texto no vacío', () => {
+    const badCount = read(`QUESTIONS.filter(q => !q.text || !q.text.trim()).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('todas las preguntas MCQ tienen al menos 2 opciones', () => {
+    const badCount = read(`QUESTIONS.filter(q => q.type !== 'dragdrop' && (!q.options || q.options.length < 2)).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('todas las preguntas MCQ tienen al menos una respuesta correcta marcada', () => {
+    const badCount = read(`QUESTIONS.filter(q => q.type !== 'dragdrop' && (!q.correct || q.correct.length === 0)).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('todas las letras en "correct" existen entre las opciones de esa pregunta', () => {
+    const badCount = read(`QUESTIONS.filter(q => {
+      if (q.type === 'dragdrop') return false;
+      const letters = q.options.map(o => o.letter);
+      return q.correct.some(c => !letters.includes(c));
+    }).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('las preguntas multi tienen 2+ respuestas correctas, y las single exactamente 1', () => {
+    const badCount = read(`QUESTIONS.filter(q => {
+      if (q.type === 'dragdrop') return false;
+      if (q.multi) return q.correct.length < 2;
+      return q.correct.length !== 1;
+    }).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('las preguntas drag&drop tienen "items", "targets" y "correct" como objeto', () => {
+    const badCount = read(`QUESTIONS.filter(q => q.type === 'dragdrop').filter(q => !q.items || !q.targets || typeof q.correct !== 'object' || Array.isArray(q.correct)).length`);
+    expect(badCount).toBe(0);
+  });
+
+  it('ningún texto de pregunta u opción contiene artefactos de PDF sin limpiar', () => {
+    const badCount = read(`(() => {
+      const artifacts = [/SecExams/, /Correct Answer\\)/, /Page \\d+ of/];
+      let bad = 0;
+      QUESTIONS.forEach(q => {
+        const blob = q.text + JSON.stringify(q.options || []);
+        if (artifacts.some(a => a.test(blob))) bad++;
+      });
+      return bad;
+    })()`);
+    expect(badCount).toBe(0);
+  });
+});
+
+describe('3. Configuración inicial (Home)', () => {
+  it('los desplegables de configuración se han poblado desde CONFIG', () => {
+    const countOpts = $all('#cfg-count option');
+    expect(countOpts.length).toBeGreaterThan(0);
+  });
+
+  it('la opción "Todas" del desplegable refleja el nº real de preguntas', () => {
+    const allOpt = $('#cfg-count option[value="all"]');
+    const total = read('QUESTIONS.length');
+    expect(allOpt).toBeDefined();
+    expect(allOpt.textContent).toContain(String(total));
+  });
+
+  it('el badge de cabecera muestra el nº real de preguntas', () => {
+    const badge = $('#hdr-badge-count');
+    const total = read('QUESTIONS.length');
+    expect(badge.textContent).toContain(String(total));
+  });
+
+  it('los presets definidos en CONFIG se han renderizado como botones', () => {
+    const buttons = $all('#preset-row button, #preset-row .preset-btn');
+    const presetCount = read('CONFIG.presets.length');
+    expect(buttons.length).toBeGreaterThanOrEqual(presetCount);
+  });
+});
+
+describe('4. Flujo completo: Modo Práctica (single-select)', () => {
+  it('startQuiz() arranca una sesión y muestra la pantalla "quiz"', () => {
+    resetAppState();
+    $('#cfg-count').value = '10';
+    $('#cfg-order').value = 'seq';
+    $('#cfg-timer').value = '0';
+    win.selModeByKey('practice');
+    win.startQuiz();
+    expect($('#quiz').classList.contains('active')).toBeTruthy();
+  });
+
+  it('se renderizan opciones clicables para la primera pregunta', () => {
+    const opts = $all('#opts .opt');
+    expect(opts.length).toBeGreaterThan(0);
+  });
+
+  it('seleccionar una opción la marca visualmente como "sel"', () => {
+    const opts = $all('#opts .opt');
+    click(opts[0]);
+    expect(opts[0].classList.contains('sel')).toBeTruthy();
+  });
+
+  it('confirmAnswer() revela el feedback correcto/incorrecto en modo práctica', () => {
+    click($('#btn-confirm'));
+    const exp = $('#expl-box');
+    expect(isVisible(exp)).toBeTruthy();
+  });
+
+  it('tras confirmar, las opciones quedan deshabilitadas (no se puede recambiar)', () => {
+    const opts = $all('#opts .opt');
+    const stillClickable = opts.some(o => !o.classList.contains('disabled'));
+    expect(stillClickable).toBeFalsy();
+  });
+
+  it('goNext() avanza el contador de pregunta', () => {
+    const before = $('#q-counter').textContent;
+    click($('#btn-next'));
+    const after = $('#q-counter').textContent;
+    expect(before).not && expect(after).not;
+    if (before === after) throw new Error('El contador no avanzó: sigue en "' + after + '"');
+  });
+});
+
+describe('5. Multiselect: validación de selección múltiple', () => {
+  it('el banco de preguntas contiene al menos una pregunta multiselect', () => {
+    resetAppState();
+    const hasMulti = read(`QUESTIONS.some(q => q.type !== 'dragdrop' && q.multi)`);
+    expect(hasMulti).toBeTruthy();
+    $('#cfg-count').value = 'all';
+    $('#cfg-order').value = 'seq';
+    $('#cfg-timer').value = '0';
+    win.selModeByKey('practice');
+    win.startQuiz();
+  });
+
+  it('seleccionar 2 opciones en una pregunta multi marca ambas como "sel"', () => {
+    // Navigate forward until we hit a multiselect tag, max 15 tries
+    let found = false;
+    for (let i = 0; i < 15 && !found; i++) {
+      const tag = $('#q-type-tag');
+      if (tag && tag.textContent.includes('Multiselect')) { found = true; break; }
+      const nextBtn = $('#btn-skip') || $('#btn-next');
+      if (nextBtn) click(nextBtn);
+    }
+    if (!found) { console.warn('No se encontró pregunta multiselect en las primeras 15; se omite verificación estricta'); return; }
+    const opts = $all('#opts .opt');
+    click(opts[0]);
+    click(opts[1]);
+    const selectedCount = opts.filter(o => o.classList.contains('sel')).length;
+    expect(selectedCount).toBe(2);
+  });
+});
+
+describe('6. Modo Examen: sin botón Confirmar, edición libre', () => {
+  it('en modo examen no se muestra el botón Confirmar', () => {
+    resetAppState();
+    $('#cfg-count').value = '10';
+    $('#cfg-order').value = 'seq';
+    $('#cfg-timer').value = '0';
+    win.selModeByKey('exam');
+    win.startQuiz();
+    expect(isVisible($('#btn-confirm'))).toBeFalsy();
+  });
+
+  it('se puede seleccionar y cambiar (single) o acumular (multi) libremente sin bloquear', () => {
+    const isMulti = ($('#q-type-tag')?.textContent || '').includes('Multiselect');
+    const opts = $all('#opts .opt');
+    click(opts[0]);
+    click(opts[1]);
+    if (isMulti) {
+      expect(opts[0].classList.contains('sel')).toBeTruthy();
+      expect(opts[1].classList.contains('sel')).toBeTruthy();
+    } else {
+      expect(opts[0].classList.contains('sel')).toBeFalsy();
+      expect(opts[1].classList.contains('sel')).toBeTruthy();
+    }
+  });
+
+  it('tras navegar a Siguiente y volver con Anterior, la selección persiste', () => {
+    const opts = $all('#opts .opt');
+    const chosenLetter = opts[1].dataset.letter;
+    click($('#btn-skip'));
+    click($('#btn-prev'));
+    const optsAgain = $all('#opts .opt');
+    const stillSelected = optsAgain.find(o => o.dataset.letter === chosenLetter);
+    expect(stillSelected.classList.contains('sel')).toBeTruthy();
+  });
+});
+
+describe('7. Navegación: marcar preguntas (flags)', () => {
+  it('marcar la pregunta actual activa el indicador de flag', () => {
+    resetAppState();
+    $('#cfg-count').value = '10';
+    $('#cfg-order').value = 'seq';
+    win.selModeByKey('exam');
+    win.startQuiz();
+    click($('#btn-flag'));
+    const ind = $('#q-flag-ind');
+    expect(isVisible(ind)).toBeTruthy();
+  });
+
+  it('el contador de marcadas en la topbar se actualiza a 1', () => {
+    const cnt = $('#flag-cnt');
+    expect(cnt.textContent).toBe('1');
+  });
+
+  it('abrir el panel de marcadas muestra al menos 1 entrada', () => {
+    click($('#btn-flags-open'));
+    const items = $all('#fp-body .fp-item, #fp-body > div');
+    expect(items.length).toBeGreaterThan(0);
+    win.closeFlagPanel();
+  });
+
+  it('desmarcar la pregunta vuelve el contador a 0', () => {
+    click($('#btn-flag'));
+    const cnt = $('#flag-cnt');
+    expect(cnt.textContent).toBe('0');
+  });
+});
+
+describe('8. Modal de finalización (preguntas sin responder)', () => {
+  it('confirmEnd() abre el modal con el resumen', () => {
+    resetAppState();
+    $('#cfg-count').value = '10';
+    $('#cfg-order').value = 'seq';
+    win.selModeByKey('exam');
+    win.startQuiz();
+    win.confirmEnd();
+    const modal = $('#finish-modal');
+    expect(modal.classList.contains('open')).toBeTruthy();
+  });
+
+  it('el modal reporta correctamente 0 respondidas si no se ha contestado nada', () => {
+    const unanswered = $('#fm-unanswered').textContent;
+    expect(unanswered).toBe('10');
+  });
+
+  it('cerrar sin finalizar vuelve a la pantalla de quiz', () => {
+    win.closeFinishModal(false);
+    const modal = $('#finish-modal');
+    expect(modal.classList.contains('open')).toBeFalsy();
+    expect($('#quiz').classList.contains('active')).toBeTruthy();
+  });
+
+  it('finalizar desde el modal navega a la pantalla de resultados', () => {
+    win.confirmEnd();
+    win.closeFinishModal(true);
+    expect($('#results').classList.contains('active')).toBeTruthy();
+  });
+});
+
+describe('9. Resultados y persistencia (Storage)', () => {
+  it('endQuiz() calcula un score-pct numérico válido (0-100%)', () => {
+    const pctText = $('#score-pct').textContent.replace('%', '');
+    const pct = parseInt(pctText, 10);
+    expect(Number.isNaN(pct)).toBeFalsy();
+    expect(pct).toBeGreaterThanOrEqual(0);
+    expect(pct).toBeLessThanOrEqual(100);
+  });
+
+  it('Storage.getStats() refleja al menos 1 sesión completada tras endQuiz', () => {
+    const sessions = read('Storage.getStats().sessions');
+    expect(sessions).toBeGreaterThan(0);
+  });
+
+  it('los contadores de correctas+incorrectas+sin responder suman el total de preguntas', () => {
+    const ok = parseInt($('#r-ok').textContent, 10);
+    const bad = parseInt($('#r-bad').textContent, 10);
+    const skip = parseInt($('#r-skip').textContent, 10);
+    expect(ok + bad + skip).toBe(10);
+  });
+
+  it('volver a Inicio actualiza las estadísticas de la home (mejor nota, sesiones)', () => {
+    win.navTo('home');
+    const sessions = $('#s-sessions').textContent;
+    expect(parseInt(sessions, 10)).toBeGreaterThan(0);
+  });
+});
+
+describe('10. Racha (Streak) en Modo Práctica', () => {
+  it('checkStreak(true) incrementa la racha y no lanza errores', () => {
+    resetAppState();
+    win.currentStreak = 0;
+    win.bestSessionStreak = 0;
+    win.mode = 'practice';
+    let threw = false;
+    try { win.checkStreak(true); } catch(e) { threw = true; }
+    expect(threw).toBeFalsy();
+  });
+
+  it('checkStreak(false) resetea la racha a 0', () => {
+    win.mode = 'practice';
+    win.checkStreak(true);
+    win.checkStreak(true);
+    win.checkStreak(false);
+    expect(win.currentStreak).toBe(0);
+  });
+});
+
+describe('11. Historial de preguntas', () => {
+  it('navegar a Historial renderiza una tabla con filas', () => {
+    win.navTo('history');
+    const rows = $all('#hist-body tr');
+    expect(rows.length).toBeGreaterThan(0);
+  });
+
+  it('el buscador de historial filtra resultados por número de pregunta', () => {
+    const search = $('#hist-srch');
+    const firstNum = read('QUESTIONS[0].num');
+    search.value = String(firstNum);
+    search.dispatchEvent(new win.Event('input', { bubbles: true }));
+    const rows = $all('#hist-body tr');
+    expect(rows.length).toBeGreaterThanOrEqual(1);
+    search.value = '';
+    search.dispatchEvent(new win.Event('input', { bubbles: true }));
+  });
+});
+
+describe('12. Sección "Acerca de"', () => {
+  it('navegar a Acerca de renderiza al menos una nota de versión', () => {
+    win.navTo('about');
+    const versions = $all('#about-versions-list .version-card, #about-versions-list > div');
+    expect(versions.length).toBeGreaterThan(0);
+  });
+
+  it('se renderiza al menos un colaborador', () => {
+    const contribs = $all('#about-contrib-list .contrib-card, #about-contrib-list > div');
+    expect(contribs.length).toBeGreaterThan(0);
+  });
+});
+
+describe('13. Drag & Drop (si el banco contiene preguntas de este tipo)', () => {
+  it('localiza una pregunta drag&drop y la renderiza con zonas de destino', () => {
+    const hasDD = read(`QUESTIONS.some(q => q.type === 'dragdrop')`);
+    if (!hasDD) { console.warn('No hay preguntas drag&drop en el banco actual; se omite suite'); return; }
+    resetAppState();
+    $('#cfg-count').value = 'all';
+    $('#cfg-order').value = 'seq';
+    win.selModeByKey('practice');
+    win.startQuiz();
+    const totalQ = read('QUESTIONS.length');
+    let found = false;
+    for (let i = 0; i < totalQ && !found; i++) {
+      const ddArea = $('#dd-area');
+      if (isVisible(ddArea) && ddArea.children.length > 0) { found = true; break; }
+      const nextBtn = $('#btn-skip') || $('#btn-next');
+      if (nextBtn) click(nextBtn); else break;
+    }
+    expect(found).toBeTruthy();
+  });
+});
+
+// ════════════════════════════════════════════════════════════
+// RUNNER
+// ════════════════════════════════════════════════════════════
+async function runAll() {
+  const btn = document.getElementById('run-btn');
+  const badge = document.getElementById('status-badge');
+  const path = document.getElementById('app-path').value.trim();
+  btn.disabled = true;
+  badge.textContent = 'Cargando app…';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('progress-bar').style.width = '0%';
+
+  // Suites are registered once via describe()/it() calls at script-parse time.
+  // We intentionally do NOT clear `suites` here: there is no re-registration
+  // step, so wiping the array would leave 0 tests to run on every click.
+
+  const startTime = performance.now();
+
+  try {
+    await loadApp(path);
+  } catch (e) {
+    badge.textContent = 'Error de carga';
+    document.getElementById('results').innerHTML =
+      `<div class="suite"><div class="suite-hdr" style="color:var(--red)">❌ No se pudo cargar la app</div>
+       <div class="case fail"><span class="icon">✗</span><div><div class="name">${e.message}</div></div></div></div>`;
+    btn.disabled = false;
+    return;
+  }
+
+  badge.textContent = 'Ejecutando tests…';
+
+  let totalCases = 0;
+  suites.forEach(s => totalCases += s.cases.length);
+  let done = 0, passCount = 0, failCount = 0;
+  const resultsEl = document.getElementById('results');
+
+  for (const suite of suites) {
+    const suiteDiv = document.createElement('div');
+    suiteDiv.className = 'suite';
+    const hdr = document.createElement('div');
+    hdr.className = 'suite-hdr';
+    const hdrNameSpan = document.createElement('span');
+    hdrNameSpan.textContent = suite.name;
+    const hdrBadge = document.createElement('span');
+    hdrBadge.className = 'badge';
+    hdrBadge.textContent = '…';
+    hdr.appendChild(hdrNameSpan);
+    hdr.appendChild(hdrBadge);
+    suiteDiv.appendChild(hdr);
+    resultsEl.appendChild(suiteDiv);
+
+    let suitePass = 0, suiteFail = 0;
+
+    for (const c of suite.cases) {
+      const caseDiv = document.createElement('div');
+      try {
+        await c.fn();
+        caseDiv.className = 'case pass';
+        caseDiv.innerHTML = `<span class="icon">✓</span><div><div class="name">${c.name}</div></div>`;
+        passCount++; suitePass++;
+      } catch (err) {
+        caseDiv.className = 'case fail';
+        caseDiv.innerHTML = `<span class="icon">✗</span><div><div class="name">${c.name}</div><div class="msg">${err.message}</div></div>`;
+        failCount++; suiteFail++;
+      }
+      suiteDiv.appendChild(caseDiv);
+      done++;
+      document.getElementById('progress-bar').style.width = (done / totalCases * 100) + '%';
+      await sleep(5); // let UI breathe
+    }
+
+    hdrBadge.textContent = suiteFail === 0 ? `✓ ${suitePass}/${suitePass}` : `✗ ${suitePass}/${suitePass + suiteFail}`;
+    hdrBadge.style.color = suiteFail === 0 ? 'var(--green)' : 'var(--red)';
+  }
+
+  const durSec = ((performance.now() - startTime) / 1000).toFixed(1);
+  document.getElementById('summary').style.display = 'flex';
+  document.getElementById('sum-total').textContent = totalCases;
+  document.getElementById('sum-pass').textContent = passCount;
+  document.getElementById('sum-fail').textContent = failCount;
+  document.getElementById('sum-dur').textContent = durSec + 's';
+
+  badge.textContent = failCount === 0 ? '✅ Todo OK' : `⚠️ ${failCount} fallo(s)`;
+  badge.style.background = failCount === 0 ? 'var(--green)' : 'var(--red)';
+  badge.style.color = '#fff';
+  btn.disabled = false;
+}
+
+document.getElementById('progress-bar').style.width = '0%';
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "explicacion": "GitHub Pages es un servicio de alojamiento de sitios estáticos (HTML, CSS y JS).",
+    "id": 1,
+    "opciones": [
+      "Requiere un servidor Node.js de pago.",
+      "Sirve archivos estáticos directamente desde un repositorio de GitHub.",
+      "Solo funciona con bases de datos MySQL.",
+      "No permite ejecutar código JavaScript."
+    ],
+    "pregunta": "¿Cuál de las siguientes afirmaciones sobre GitHub Pages es correcta?",
+    "respuestaCorrecta": 1
+  }
+]
