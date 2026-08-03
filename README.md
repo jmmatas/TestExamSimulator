@@ -1,7 +1,3 @@
-Nota: Abrir este fichero markdown en Visual Studio Code y activar vista previa para visualizarlo correctamente. O con cualquier lector de MarkDown. 
-
-
-
 ```text
 
                      M I N S A I T
