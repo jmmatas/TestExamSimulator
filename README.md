@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ```text
 
                      M I N S A I T
@@ -123,6 +124,8 @@ Borrando los datos almacenados en Local Storage o utilizando la opción de reini
 
 Minsait – ServiceNow Practice Tools
 =======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 # Quiz Simulator para ServiceNow
 
 Bienvenido al proyecto del simulador de examen tipo test. Esta aplicación permite cargar un fichero JSON con preguntas, hacer una prueba, marcar preguntas, revisar resultados y practicar por dominio.
@@ -357,5 +360,9 @@ Si quieres usarla sin complicarte:
 
 Proyecto pensado como herramienta práctica para formación y autoestudio en ServiceNow.
 
+<<<<<<< HEAD
 Minsait – ServiceNow Practice Tools
 >>>>>>> 3603bee (Changes)
+=======
+Minsait – ServiceNow Practice Tools
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42

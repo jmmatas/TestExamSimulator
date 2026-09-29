@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // ══════════════════════════════════════════════════════════════
 // translations.js - 
 // Diccionario de idiomas para el simulador CIS-DF Quiz
@@ -135,6 +136,8 @@ const TRANSLATIONS = {
         lbl_question: "Question"
     }
 =======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 // ══════════════════════════════════════════════════════════════
 // translations.js - 
 // Diccionario de idiomas para el simulador CIS-DF Quiz
@@ -270,5 +273,8 @@ const TRANSLATIONS = {
         lbl_live_incorrect: "INCORRECT",
         lbl_question: "Question"
     }
+<<<<<<< HEAD
 >>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 };

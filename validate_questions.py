@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import pathlib, re, json, sys
 path = pathlib.Path('questions.js')
 text = path.read_text(encoding='utf-8')
@@ -49,6 +50,8 @@ for num,c in invalid:
 if not missing and not invalid:
     print('VALIDATION PASSED')
 =======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 import pathlib, re, json, sys
 path = pathlib.Path('questions.js')
 text = path.read_text(encoding='utf-8')
@@ -98,4 +101,7 @@ for num,c in invalid:
     print('INVALID correct letter', c, 'in q', num)
 if not missing and not invalid:
     print('VALIDATION PASSED')
+<<<<<<< HEAD
 >>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42

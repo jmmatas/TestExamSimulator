@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const METADATA = {
   "1": { "domain": "Configuration", "explanation": "Las Technical Service Offerings sincronizan grupos operativos como Support y Managed By con los CIs asociados mediante Dynamic CI Groups, asegurando consistencia operativa." },
   "2": { "domain": "Ingest", "explanation": "Cada tipo de service mapping se usa según complejidad: top‑down para precisión, connection suggestion para entornos dinámicos y Dynamic CI Groups para agrupaciones simples." },
@@ -215,6 +216,8 @@ const METADATA = {
   "194": { "domain": "Govern", "explanation": "Como la pregunta pide confirmar que un atributo concreto (la Location) tiene el valor correcto, no simplemente que el CI exista, la policy correcta es Certification y no Attestation." }
 }
 =======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 const METADATA = {
   "1": { "domain": "Configuration", "explanation": "Las Technical Service Offerings sincronizan grupos operativos como Support y Managed By con los CIs asociados mediante Dynamic CI Groups, asegurando consistencia operativa." },
   "2": { "domain": "Ingest", "explanation": "Cada tipo de service mapping se usa según complejidad: top‑down para precisión, connection suggestion para entornos dinámicos y Dynamic CI Groups para agrupaciones simples." },
@@ -430,4 +433,7 @@ const METADATA = {
   "193": { "domain": "Configuration", "explanation": "" },
   "194": { "domain": "Govern", "explanation": "Como la pregunta pide confirmar que un atributo concreto (la Location) tiene el valor correcto, no simplemente que el CI exista, la policy correcta es Certification y no Attestation." }
 }
+<<<<<<< HEAD
 >>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
