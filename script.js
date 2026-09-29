@@ -7,10 +7,10 @@ const CONFIG = {
 
   // ── APLICACIÓN / MARCA ───────────────────────────────────────
   app: {
-    name:           "CIS-DF Quiz",              // Nombre corto (logo, título de pestaña)
+    name:           "Test Exam Simulator",              // Nombre corto (logo, título de pestaña)
     title:          "CIS-DF Practice Quiz",     // Título grande en la home
     subtitle:       "CMDB &amp; CSDM · Certified Implementation Specialist – Data Foundations",
-    aboutName:      "CIS-DF Quiz",              // Nombre en la sección "Acerca de"
+    aboutName:      "Test Exam Simulator",              // Nombre en la sección "Acerca de"
     aboutSubtitle:  "Simulador de examen para la certificación ServiceNow<br>Certified Implementation Specialist - Data Foundations",
     examLabel:      "CIS-DF",                   // Usado en el mensaje de resultados ("El examen X requiere...")
     version:        "8.0",
