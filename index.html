@@ -5,10 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Test Exam Simulator</title>
+<<<<<<< HEAD
+<<<<<<< HEAD
   <script src="questions.json"></script>
   <script src="metadata.js"></script>
   <script src="config.js"></script>
   <script src="storage.js"></script>
+=======
+  <script src="script.js"></script>
+  <script src="metadata.js"></script>
+>>>>>>> 3603bee (Changes)
+=======
+  <script src="script.js"></script>
+  <script src="metadata.js"></script>
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   <script src="translations.js"></script>
   <style>
     :root {
@@ -2203,11 +2213,243 @@
         padding: 16px 0 10px;
       }
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+
+
+
+    /* --- Contenedor Principal --- */
+    .exam-loader-card {
+      max-width: 540px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+    }
+
+    .loader-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .loader-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.4rem 0;
+      color: #0f172a;
+    }
+
+    .loader-subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* --- Zona Drop Zone --- */
+    .drop-zone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      background: #f8fafc;
+      text-align: center;
+      transition: all 0.25s ease-in-out;
+      position: relative;
+    }
+
+    /* Estado al arrastrar archivo encima */
+    .drop-zone.drag-over {
+      border-color: #2563eb;
+      background-color: #eff6ff;
+      transform: scale(1.01);
+    }
+
+    .drop-zone-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .upload-icon {
+      stroke: #3b82f6;
+      margin-bottom: 0.2rem;
+    }
+
+    .drop-text {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .divider-text {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Botón de selección de archivo oculto e interfaz estilizada */
+    .file-input-hidden {
+      display: none;
+    }
+
+    .btn-select-file {
+      display: inline-block;
+      padding: 0.55rem 1.25rem;
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-select-file:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* --- Vista previa del archivo cargado --- */
+    .file-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 1rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .file-preview-icon {
+      font-size: 1.8rem;
+    }
+
+    .file-preview-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    .file-preview-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-preview-size {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .btn-remove-file {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 0 0.3rem;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .btn-remove-file:hover {
+      color: #ef4444;
+    }
+
+    /* Clases de utilidad */
+    .hidden {
+      display: none !important;
+    }
+
+    /* --- Sección URL Remota --- */
+    .url-section {
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .url-section-title {
+      display: block;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 0.6rem;
+    }
+
+    .url-input-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .url-input-group input {
+      flex-grow: 1;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .url-input-group input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-url-load {
+      padding: 0.55rem 1rem;
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-url-load:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   </style>
 </head>
 
 <body>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+  <!--
+    Estructura general de la aplicación:
+    - header: barra superior con navegación
+    - panel de preguntas marcadas
+    - pantalla de inicio: carga de examen
+    - pantallas de historial y acerca de
+    - resto de contenido dinámico generado con JavaScript
+  -->
+
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   <header>
     <div class="logo">
       <div class="logo-icon">📋</div><span id="hdr-app-name">Test Exam Simulator</span>
@@ -2238,11 +2480,75 @@
   </div>
 
   <!-- ══════════ HOME ══════════ -->
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+  <!--
+    Esta es la primera vista que ve el usuario.
+    Aquí se carga el fichero JSON con las preguntas y se configuran
+    todos los parámetros del examen antes de comenzar.
+  -->
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   <div id="home" class="screen active">
     <div class="page-wrap">
       <div class="hero">
         <h1 id="home-title">Test Exam Simulator</h1>
         <p id="home-subtitle">- No question file loaded -</p>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+        <div class="exam-loader-card">
+          <div class="loader-header">
+            <h2 class="loader-title">Cargar Examen</h2>
+            <p class="loader-subtitle">Selecciona o arrastra tu fichero local de preguntas para empezar</p>
+          </div>
+
+          <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-content" id="dropZoneContent">
+              <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <p class="drop-text">Arrastra y suelta tu archivo <strong>.json</strong> aquí</p>
+              <span class="divider-text">o</span>
+              <label for="fileInput" class="btn-select-file">Examinar equipo</label>
+              <input type="file" id="fileInput" accept=".json,.txt" class="file-input-hidden" />
+            </div>
+
+            <div class="file-preview hidden" id="filePreview">
+              <div class="file-preview-icon">📄</div>
+              <div class="file-preview-details">
+                <span class="file-preview-name" id="fileName">exam_questions.json</span>
+                <span class="file-preview-size" id="fileSize">24 KB</span>
+              </div>
+              <div class="file-preview-actions">
+                <button type="button" class="btn-secondary btn-sm" id="btnChangeFile">Cambiar archivo</button>
+                <button type="button" class="btn-remove-file" id="btnRemoveFile" title="Quitar archivo">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="url-section">
+            <span class="url-section-title">¿Tienes una URL directa al archivo?</span>
+            <div class="url-input-group">
+              <input type="url" id="urlInput" placeholder="https://ejemplo.com/preguntas.json" />
+              <button type="button" id="btnLoadUrl" class="btn-url-load">Cargar</button>
+            </div>
+          </div>
+        </div>
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       </div>
       <div class="stats-row">
         <div class="stat-card">
@@ -2527,19 +2833,241 @@
 
   <script>
     // ══ TRANSLATION ══
+<<<<<<< HEAD
+<<<<<<< HEAD
     let currentLang = localStorage.getItem("quiz_lang") || "es"; // Idioma por defecto
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+    // Este bloque inicializa el idioma de la interfaz y el conjunto de preguntas.
+    // La idea es separar el contenido visual (traducciones) del contenido de examen
+    // para que la app sea reutilizable en diferentes certificaciones o idiomas.
+    let currentLang = localStorage.getItem("quiz_lang") || "es"; // Idioma por defecto
+    if (typeof TRANSLATIONS === 'undefined') window.TRANSLATIONS = { es: {}, en: {} };
+    let QUESTIONS = []; // Preguntas cargadas desde questions.json o desde un archivo externo
+
+    // Carga la batería por defecto desde questions.json.
+    // Importante: si la app se abre con file://, el navegador bloquea fetch() por CORS.
+    // Por eso se recomienda ejecutarla desde un servidor local o cargar el JSON manualmente.
+    async function loadQuestions() {
+      if (window.location.protocol === 'file:') {
+        console.warn('Se abrió el archivo directamente con file://. La carga automática de questions.json está bloqueada por CORS del navegador. Usa un servidor local o carga el JSON manualmente.');
+        updateLoadStatus('questions.json', 0, true);
+        return;
+      }
+
+      try {
+        const response = await fetch("questions.json");
+        if (!response.ok) {
+          console.warn(`questions.json no está disponible: HTTP ${response.status}`);
+          return;
+        }
+
+        const data = await response.json();
+        if (!validateQuestionsData(data)) {
+          console.warn('questions.json tiene formato inválido, se ignorará la carga automática.');
+          return;
+        }
+
+        QUESTIONS = Array.isArray(data) ? data : data.questions;
+        window.QUESTIONS = QUESTIONS;
+
+        if (typeof enrichQuestions === "function") enrichQuestions();
+        updateLoadStatus("questions.json", QUESTIONS.length);
+      } catch (error) {
+        console.warn("No se pudo cargar questions.json:", error);
+      } finally {
+        if (typeof buildHomeUI === "function") buildHomeUI();
+        if (typeof updateHomeStats === "function") updateHomeStats();
+      }
+    }
+
+    function updateLoadStatus(filename, count, error = false) {
+      const subtitle = document.getElementById('home-subtitle');
+      if (!subtitle) return;
+      if (error) {
+        subtitle.textContent = `No se pudo cargar ${filename}.`;
+      } else {
+        subtitle.textContent = `${count} pregunta${count === 1 ? '' : 's'} cargada${count === 1 ? '' : 's'} desde ${filename}`;
+      }
+    }
+
+    function toggleFileLoaderUI(show) {
+      const dropContent = document.querySelector('.drop-zone-content');
+      const urlSection = document.querySelector('.url-section');
+      if (dropContent) dropContent.classList.toggle('hidden', !show);
+      if (urlSection) urlSection.classList.toggle('hidden', !show);
+    }
+
+    function normalizeJsonText(text) {
+      // Quita BOM y espacios vacíos para evitar problemas con JSON que llega con formato extraño.
+      return text.replace(/^\uFEFF/, '').trim();
+    }
+
+    function isQuestionObject(q) {
+      // Validación mínima para aceptar sólo objetos de pregunta coherentes.
+      // Deben tener un número y texto, que son los datos mínimos para renderizar una pregunta.
+      if (!q || typeof q !== 'object') return false;
+      const num = q.num;
+      const numValid = typeof num === 'number' || (typeof num === 'string' && /^\d+$/.test(num));
+      return numValid && typeof q.text === 'string';
+    }
+
+    function validateQuestionsData(data) {
+      // Acepta dos formatos razonables:
+      // 1) un array directo de preguntas
+      // 2) un objeto con propiedad 'questions'
+      if (Array.isArray(data)) return data.length > 0 && data.every(isQuestionObject);
+      if (data && Array.isArray(data.questions)) return data.questions.length > 0 && data.questions.every(isQuestionObject);
+      return false;
+    }
+
+    // Esta función es clave: convierte el texto JSON del archivo en preguntas
+    // reales que la app puede usar. También valida que el formato sea correcto.
+    function parseQuestionData(jsonText, sourceLabel = 'local file') {
+      try {
+        const text = normalizeJsonText(jsonText);
+        const data = JSON.parse(text);
+        if (!validateQuestionsData(data)) {
+          console.group('Carga de preguntas inválida');
+          console.log('Source:', sourceLabel);
+          console.log('Parsed data type:', typeof data, Array.isArray(data) ? 'array' : 'object');
+          console.log('Data preview:', data && data.slice ? data.slice(0, 3) : data);
+          console.groupEnd();
+          throw new Error('El archivo no tiene el formato correcto. Debe ser un array de preguntas o un objeto con una propiedad questions.');
+        }
+
+        QUESTIONS = Array.isArray(data) ? data : data.questions;
+        window.QUESTIONS = QUESTIONS;
+        if (typeof enrichQuestions === "function") enrichQuestions();
+        if (typeof buildHomeUI === "function") buildHomeUI();
+        if (typeof updateHomeStats === "function") updateHomeStats();
+        updateLoadStatus(sourceLabel, QUESTIONS.length);
+        toggleFileLoaderUI(false);
+        return true;
+      } catch (err) {
+        alert(err.message.includes('Formato') ? err.message : 'El archivo no contiene JSON válido.');
+        console.error('Error parseando JSON de preguntas:', err);
+        updateLoadStatus(sourceLabel, 0, true);
+        return false;
+      }
+    }
+
+    function loadQuestionsFromFile(file) {
+      const reader = new FileReader();
+      reader.onload = event => {
+        const success = parseQuestionData(event.target.result, file.name);
+        if (success) {
+          document.getElementById('fileName').textContent = file.name;
+          document.getElementById('fileSize').textContent = `${Math.round(file.size / 1024)} KB`;
+          document.getElementById('filePreview').classList.remove('hidden');
+        } else {
+          document.getElementById('filePreview').classList.add('hidden');
+          document.getElementById('fileInput').value = '';
+        }
+      };
+      reader.readAsText(file, 'utf-8');
+    }
+
+    async function loadQuestionsFromUrl(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+        if (parseQuestionData(text, url)) {
+          document.getElementById('fileName').textContent = url;
+          document.getElementById('fileSize').textContent = 'desde URL';
+          document.getElementById('filePreview').classList.remove('hidden');
+        } else {
+          document.getElementById('filePreview').classList.add('hidden');
+        }
+      } catch (err) {
+        alert('No se pudo cargar el archivo desde la URL proporcionada.');
+        console.error('Error cargando preguntas desde URL:', err);
+        updateLoadStatus(url, 0, true);
+      }
+    }
+
+    // Inicializa el flujo de carga de archivos local y desde URL.
+    // Esto permite que cada usuario introduzca su propio JSON sin tocar el código.
+    function initFileLoader() {
+      const fileInput = document.getElementById('fileInput');
+      const btnLoadUrl = document.getElementById('btnLoadUrl');
+      const urlInput = document.getElementById('urlInput');
+      const dropZone = document.getElementById('dropZone');
+      const btnRemoveFile = document.getElementById('btnRemoveFile');
+
+      if (fileInput) {
+        fileInput.addEventListener('change', () => {
+          const file = fileInput.files[0];
+          if (file) loadQuestionsFromFile(file);
+        });
+      }
+
+      if (btnLoadUrl) {
+        btnLoadUrl.addEventListener('click', () => {
+          const url = urlInput.value.trim();
+          if (url) loadQuestionsFromUrl(url);
+        });
+      }
+
+      if (dropZone) {
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', e => {
+          e.preventDefault(); dropZone.classList.remove('drag-over');
+          const file = e.dataTransfer.files[0];
+          if (file) loadQuestionsFromFile(file);
+        });
+      }
+
+      if (btnRemoveFile) {
+        btnRemoveFile.addEventListener('click', () => {
+          document.getElementById('filePreview').classList.add('hidden');
+          document.getElementById('fileName').textContent = 'exam_questions.json';
+          document.getElementById('fileSize').textContent = '24 KB';
+          fileInput.value = '';
+          toggleFileLoaderUI(true);
+          document.getElementById('home-subtitle').textContent = '- No question file loaded -';
+        });
+      }
+      const btnChangeFile = document.getElementById('btnChangeFile');
+      if (btnChangeFile) {
+        btnChangeFile.addEventListener('click', () => {
+          document.getElementById('filePreview').classList.add('hidden');
+          fileInput.value = '';
+          if (urlInput) urlInput.value = '';
+          toggleFileLoaderUI(true);
+          document.getElementById('home-subtitle').textContent = '- No question file loaded -';
+        });
+      }
+    }
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 
     // Inicialización en la carga de la página
     document.addEventListener("DOMContentLoaded", () => {
       const langSelector = document.getElementById("lang-selector");
       if (langSelector) langSelector.value = currentLang;
       applyLanguage();
+<<<<<<< HEAD
+<<<<<<< HEAD
     });
 
     document.addEventListener("DOMContentLoaded", () => {
       enrichQuestions();
       buildHomeUI();
       updateHomeStats();
+=======
+      initFileLoader();
+      loadQuestions();
+>>>>>>> 3603bee (Changes)
+=======
+      initFileLoader();
+      loadQuestions();
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
     });
 
     // Función que se activa al cambiar el selector manual
@@ -2558,13 +3086,27 @@
 
     // Motor de traducción para elementos estáticos con el atributo 'data-i18n'
     function applyLanguage() {
+<<<<<<< HEAD
+<<<<<<< HEAD
       const langData = TRANSLATIONS[currentLang];
+=======
+      const langData = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
+>>>>>>> 3603bee (Changes)
+=======
+      const langData = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       if (!langData) return;
 
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (langData[key]) {
+<<<<<<< HEAD
+<<<<<<< HEAD
           // Manejamos si el elemento es un botón con emojis o estructuras especiales preservando marcas
+=======
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
           if (key === "btn_mark" && QUESTIONS[currentIdx]?.marked) {
             el.innerText = langData["btn_marked"];
           } else {
@@ -2576,7 +3118,17 @@
 
     // Función auxiliar para obtener textos dinámicos directamente desde el código JS
     function t(key) {
+<<<<<<< HEAD
+<<<<<<< HEAD
       return TRANSLATIONS[currentLang][key] || key;
+=======
+      if (typeof TRANSLATIONS === 'undefined') return key;
+      return TRANSLATIONS[currentLang]?.[key] || key;
+>>>>>>> 3603bee (Changes)
+=======
+      if (typeof TRANSLATIONS === 'undefined') return key;
+      return TRANSLATIONS[currentLang]?.[key] || key;
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
     }
 
 
@@ -2849,6 +3401,20 @@
       if (order === 'smart') pool = Storage.smartSort(pool);
       else if (order === 'random') pool = shuffle(pool);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+      if (!pool.length) {
+        alert('No hay preguntas cargadas para comenzar. Selecciona un archivo válido primero.');
+        return;
+      }
+
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       const count = countVal === 'all' ? pool.length : Math.min(parseInt(countVal), pool.length);
       sessionQ = pool.slice(0, count);
       answers = {}; ddState = {};
@@ -2885,6 +3451,19 @@
     // ══ RENDER ══
     function renderQ() {
       const q = sessionQ[currentIdx];
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+      if (!q) {
+        console.warn('renderQ: no hay pregunta disponible en sessionQ', currentIdx, sessionQ.length);
+        return;
+      }
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       const total = sessionQ.length;
       const ans = answers[currentIdx] || { selected: [], confirmed: false };
       const done = Object.values(answers).filter(a => a.confirmed).length;

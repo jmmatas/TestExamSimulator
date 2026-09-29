@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 // ══════════════════════════════════════════════════════════════
 // translations.js - 
 // Diccionario de idiomas para el simulador CIS-DF Quiz
@@ -133,4 +135,146 @@ const TRANSLATIONS = {
         lbl_live_incorrect: "INCORRECT",
         lbl_question: "Question"
     }
+=======
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+// ══════════════════════════════════════════════════════════════
+// translations.js - 
+// Diccionario de idiomas para el simulador CIS-DF Quiz
+// Este archivo contiene las traducciones de los textos utilizados 
+//    en la aplicación.
+// Se puede agregar más idiomas siguiendo la misma estructura.
+// Creado el 2024-06-17
+// Modificado el 2024-06-17
+// ══════════════════════════════════════════════════════════════
+
+const TRANSLATIONS = {
+    es: {
+        nav_config: "Configuración",
+        nav_history: "Historial",
+        config_title: "Configuración del Examen",
+        lbl_type: "Tipo de Preguntas",
+        opt_type_all: "Todas las preguntas (192)",
+        opt_type_mcq: "Opción Múltiple (MCQ - 178)",
+        opt_type_dd: "Arrastrar y Soltar (Drag & Drop - 14)",
+        lbl_category: "Dominio / Categoría",
+        opt_cat_all: "Todos los dominios",
+        lbl_mode: "Modo de Examen",
+        opt_mode_practice: "Práctica (Muestra explicación al responder)",
+        opt_mode_simulation: "Simulación Real (Sin ayuda hasta el final)",
+        lbl_max: "Número de Preguntas",
+        opt_max_10: "10 preguntas",
+        opt_max_20: "20 preguntas",
+        opt_max_45: "45 preguntas",
+        opt_max_60: "60 preguntas",
+        opt_max_all: "Examen Completo",
+        btn_start_exam: "Iniciar Examen",
+        lbl_last_score: "Última Puntuación",
+        lbl_weak_cat: "Dominio más débil",
+        btn_mark: "⭐ Marcar Pregunta",
+        btn_marked: "⭐ Marcada",
+        btn_prev: "Anterior",
+        btn_check: "Verificar",
+        btn_next: "Siguiente",
+        btn_finish: "Finalizar Examen",
+        review_title: "Resultados del Examen",
+        tab_all: "Todas",
+        tab_incorrect: "Incorrectas",
+        tab_marked: "Marcadas",
+        btn_back_start: "Volver al Inicio",
+        history_title: "Historial de Exámenes",
+        tab_hist_all: "Todos los intentos",
+        tab_hist_incorrect: "Preguntas Incorrectas",
+        tab_hist_marked: "Preguntas Marcadas",
+        btn_hist_all_domains: "Todos los Dominios",
+        btn_back: "Volver",
+        btn_clear_history: "Borrar Historial",
+        msg_no_history: "No hay exámenes guardados en el histórico.",
+        msg_no_match_filters: "No hay preguntas que coincidan con los filtros seleccionados.",
+        msg_no_match_config: "No hay preguntas que coincidan con los criterios.",
+        msg_confirm_clear: "¿Seguro que quieres borrar todo el historial de exámenes?",
+        stat_seen: "Preguntas vistas",
+        stat_precision: "Precisión global",
+        stat_completed: "Tests completados",
+        stat_filt_res: "Preguntas resultantes",
+        stat_filt_pct: "Porcentaje de acierto",
+        stat_filt_avg: "Veces respondida (Media)",
+        lbl_correct: "Correcta",
+        lbl_incorrect: "Incorrecta",
+        lbl_explanation: "Explicación",
+        lbl_test: "Test",
+        lbl_your_ans: "Tu respuesta",
+        lbl_correct_ans: "Respuesta Correcta",
+        lbl_pool_title: "Opciones Disponibles (Arrastra hacia arriba):",
+        lbl_pool_drag: "Arrastra un elemento aquí",
+        lbl_live_correct: "¡CORRECTO!",
+        lbl_live_incorrect: "INCORRECTO",
+        lbl_question: "Pregunta"
+    },
+    en: {
+        nav_config: "Configuration",
+        nav_history: "History",
+        config_title: "Exam Configuration",
+        lbl_type: "Question Type",
+        opt_type_all: "All questions (192)",
+        opt_type_mcq: "Multiple Choice (MCQ - 178)",
+        opt_type_dd: "Drag & Drop (14)",
+        lbl_category: "Domain / Category",
+        opt_cat_all: "All domains",
+        lbl_mode: "Exam Mode",
+        opt_mode_practice: "Practice (Show explanation when answering)",
+        opt_mode_simulation: "Real Simulation (No help until the end)",
+        lbl_max: "Number of Questions",
+        opt_max_10: "10 questions",
+        opt_max_20: "20 questions",
+        opt_max_45: "45 questions",
+        opt_max_60: "60 questions",
+        opt_max_all: "Full Exam",
+        btn_start_exam: "Start Exam",
+        lbl_last_score: "Last Score",
+        lbl_weak_cat: "Weakest Domain",
+        btn_mark: "⭐ Mark Question",
+        btn_marked: "⭐ Marked",
+        btn_prev: "Previous",
+        btn_check: "Verify",
+        btn_next: "Next",
+        btn_finish: "Finish Exam",
+        review_title: "Exam Results",
+        tab_all: "All",
+        tab_incorrect: "Incorrect",
+        tab_marked: "Marked",
+        btn_back_start: "Back to Start",
+        history_title: "Exam History",
+        tab_hist_all: "All Attempts",
+        tab_hist_incorrect: "Incorrect Questions",
+        tab_hist_marked: "Marked Questions",
+        btn_hist_all_domains: "All Domains",
+        btn_back: "Back",
+        btn_clear_history: "Clear History",
+        msg_no_history: "No saved exams in history.",
+        msg_no_match_filters: "No questions match the selected filters.",
+        msg_no_match_config: "No questions match the selected criteria.",
+        msg_confirm_clear: "Are you sure you want to clear all exam history?",
+        stat_seen: "Questions Seen",
+        stat_precision: "Global Accuracy",
+        stat_completed: "Completed Tests",
+        stat_filt_res: "Resulting Questions",
+        stat_filt_pct: "Accuracy Rate",
+        stat_filt_avg: "Times Answered (Avg)",
+        lbl_correct: "Correct",
+        lbl_incorrect: "Incorrect",
+        lbl_explanation: "Explanation",
+        lbl_test: "Test",
+        lbl_your_ans: "Your answer",
+        lbl_correct_ans: "Correct Answer",
+        lbl_pool_title: "Available Options (Drag upwards):",
+        lbl_pool_drag: "Drag an element here",
+        lbl_live_correct: "CORRECT!",
+        lbl_live_incorrect: "INCORRECT",
+        lbl_question: "Question"
+    }
+<<<<<<< HEAD
+>>>>>>> 3603bee (Changes)
+=======
+>>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 };
