@@ -5,20 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Test Exam Simulator</title>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <script src="questions.json"></script>
-  <script src="metadata.js"></script>
-  <script src="config.js"></script>
-  <script src="storage.js"></script>
-=======
   <script src="script.js"></script>
   <script src="metadata.js"></script>
->>>>>>> 3603bee (Changes)
-=======
-  <script src="script.js"></script>
-  <script src="metadata.js"></script>
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   <script src="translations.js"></script>
   <style>
     :root {
@@ -2213,12 +2201,6 @@
         padding: 16px 0 10px;
       }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
-
 
 
     /* --- Contenedor Principal --- */
@@ -2423,20 +2405,12 @@
       background-color: #e2e8f0;
       color: #0f172a;
     }
-<<<<<<< HEAD
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   </style>
 </head>
 
 <body>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
+
   <!--
     Estructura general de la aplicación:
     - header: barra superior con navegación
@@ -2445,11 +2419,6 @@
     - pantallas de historial y acerca de
     - resto de contenido dinámico generado con JavaScript
   -->
-
-<<<<<<< HEAD
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
   <header>
     <div class="logo">
       <div class="logo-icon">📋</div><span id="hdr-app-name">Test Exam Simulator</span>
@@ -2833,12 +2802,6 @@
 
   <script>
     // ══ TRANSLATION ══
-<<<<<<< HEAD
-<<<<<<< HEAD
-    let currentLang = localStorage.getItem("quiz_lang") || "es"; // Idioma por defecto
-=======
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
     // Este bloque inicializa el idioma de la interfaz y el conjunto de preguntas.
     // La idea es separar el contenido visual (traducciones) del contenido de examen
     // para que la app sea reutilizable en diferentes certificaciones o idiomas.
@@ -3042,32 +3005,17 @@
         });
       }
     }
-<<<<<<< HEAD
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
 
     // Inicialización en la carga de la página
     document.addEventListener("DOMContentLoaded", () => {
       const langSelector = document.getElementById("lang-selector");
       if (langSelector) langSelector.value = currentLang;
       applyLanguage();
-<<<<<<< HEAD
-<<<<<<< HEAD
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-      enrichQuestions();
-      buildHomeUI();
-      updateHomeStats();
-=======
       initFileLoader();
       loadQuestions();
->>>>>>> 3603bee (Changes)
-=======
-      initFileLoader();
-      loadQuestions();
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
     });
 
     // Función que se activa al cambiar el selector manual
@@ -3086,27 +3034,12 @@
 
     // Motor de traducción para elementos estáticos con el atributo 'data-i18n'
     function applyLanguage() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const langData = TRANSLATIONS[currentLang];
-=======
       const langData = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
->>>>>>> 3603bee (Changes)
-=======
-      const langData = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : null;
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       if (!langData) return;
-
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (langData[key]) {
-<<<<<<< HEAD
-<<<<<<< HEAD
           // Manejamos si el elemento es un botón con emojis o estructuras especiales preservando marcas
-=======
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
           if (key === "btn_mark" && QUESTIONS[currentIdx]?.marked) {
             el.innerText = langData["btn_marked"];
           } else {
@@ -3118,17 +3051,11 @@
 
     // Función auxiliar para obtener textos dinámicos directamente desde el código JS
     function t(key) {
-<<<<<<< HEAD
-<<<<<<< HEAD
       return TRANSLATIONS[currentLang][key] || key;
-=======
       if (typeof TRANSLATIONS === 'undefined') return key;
       return TRANSLATIONS[currentLang]?.[key] || key;
->>>>>>> 3603bee (Changes)
-=======
       if (typeof TRANSLATIONS === 'undefined') return key;
       return TRANSLATIONS[currentLang]?.[key] || key;
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
     }
 
 
@@ -3400,21 +3327,10 @@
 
       if (order === 'smart') pool = Storage.smartSort(pool);
       else if (order === 'random') pool = shuffle(pool);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       if (!pool.length) {
         alert('No hay preguntas cargadas para comenzar. Selecciona un archivo válido primero.');
         return;
       }
-
-<<<<<<< HEAD
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       const count = countVal === 'all' ? pool.length : Math.min(parseInt(countVal), pool.length);
       sessionQ = pool.slice(0, count);
       answers = {}; ddState = {};
@@ -3451,19 +3367,10 @@
     // ══ RENDER ══
     function renderQ() {
       const q = sessionQ[currentIdx];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       if (!q) {
         console.warn('renderQ: no hay pregunta disponible en sessionQ', currentIdx, sessionQ.length);
         return;
       }
-<<<<<<< HEAD
->>>>>>> 3603bee (Changes)
-=======
->>>>>>> 3c6dc23ca4a63d0c37eba0e710a18406a19ecb42
       const total = sessionQ.length;
       const ans = answers[currentIdx] || { selected: [], confirmed: false };
       const done = Object.values(answers).filter(a => a.confirmed).length;
