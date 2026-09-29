@@ -1,0 +1,6 @@
+# Evitar subir archivos de preguntas al repositorio
+*.json
+*.txt
+*.csv
+questions/
+preguntas/

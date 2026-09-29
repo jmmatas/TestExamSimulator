@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Simulator - Guía de Usuario</title>
+    <style>
+        body {
+            font-family: Segoe UI, Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+            margin: 0;
+        }
+        header {
+            background: #1b2b52;
+            color: white;
+            padding: 25px;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            display: flex;
+        }
+        nav {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: auto;
+        }
+        nav a {
+            display: block;
+            padding: 8px;
+            color: #1b2b52;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background: #eef4ff;
+        }
+        main {
+            flex: 1;
+            padding: 40px;
+        }
+        section {
+            margin-bottom: 70px;
+        }
+        h2 {
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 8px;
+        }
+        .note {
+            background: #eef7ff;
+            border-left: 5px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .tip {
+            background: #ecfff1;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+        }
+        .warning {
+            background: #fff4e5;
+            border-left: 5px solid orange;
+            padding: 15px;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+        }
+        code {
+            background: #eee;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CIS-DF Exam Simulator</h1>
+        <div>
+            User Guide (Spanish)
+        </div>
+    </header>
+    <div class="container">
+        <nav>
+            <b>CONTENIDO</b>
+            <hr>
+            <a href="#intro">Introducción</a>
+            <a href="#home">Pantalla principal</a>
+            <a href="#examsetup">Exam Setup</a>
+            <a href="#modes">Modos de examen</a>
+            <a href="#exam">Durante el examen</a>
+            <a href="#review">Review</a>
+            <a href="#history">Histórico</a>
+            <a href="#stats">Estadísticas</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <main>
+            <section id="intro">
+                <h2>Introducción</h2>
+                <p>
+                    El simulador CIS-DF Exam Simulator permite preparar la certificación
+                    ServiceNow Certified Implementation Specialist – CMDB Data Foundations.
+                </p>
+                <div class="note">
+                    Toda la información del progreso se almacena únicamente en el navegador
+                    (LocalStorage). No se envía información a Internet.
+                </div>
+            </section>
+            <section id="home">
+                <h2>Pantalla principal</h2>
+                <img src="images/home.png">
+                <p>
+                    Desde esta pantalla se configura el examen.
+                </p>
+                <ul>
+                    <li>Número de preguntas.</li>
+                    <li>Modo de examen.</li>
+                    <li>Orden de las preguntas.</li>
+                    <li>Filtros.</li>
+                </ul>
+            </section>
+            <section id="examsetup">
+                <h2>Exam Setup</h2>
+                <h3>Questions</h3>
+                <p>
+                    Número de preguntas que contendrá el examen.
+                </p>
+                <h3>Mode</h3>
+                <p>
+                    Permite seleccionar el modo de funcionamiento.
+                </p>
+                <h3>Smart Order</h3>
+                <p>
+                    Prioriza preguntas nunca vistas, preguntas débiles y preguntas marcadas.
+                </p>
+            </section>
+            <section id="modes">
+                <h2>Modos de examen</h2>
+                <h3>Certification</h3>
+                <p>
+                    Simula el examen oficial.
+                </p>
+                <h3>Practice</h3>
+                <p>
+                    Muestra inmediatamente si la respuesta es correcta.
+                </p>
+                <h3>Weak Questions</h3>
+                <p>
+                    Entrena únicamente las preguntas con menor porcentaje de acierto.
+                </p>
+                <h3>Unseen Questions</h3>
+                <p>
+                    Muestra preguntas que todavía no han sido respondidas.
+                </p>
+            </section>
+            <section id="exam">
+                <h2>Durante el examen</h2>
+                <img src="images/exam.png">
+                <p>
+                    Durante el examen se muestra:
+                </p>
+                <ul>
+                    <li>Número de pregunta.</li>
+                    <li>Categoría.</li>
+                    <li>Temporizador.</li>
+                    <li>Barra de progreso.</li>
+                    <li>Botón Marcar.</li>
+                </ul>
+            </section>
+            <section id="review">
+                <h2>Review</h2>
+                <img src="images/review.png">
+                <p>
+                    Tras finalizar el examen se muestra una revisión completa de todas las preguntas.
+                </p>
+            </section>
+            <section id="history">
+                <h2>Histórico</h2>
+                <img src="images/history.png">
+                <p>
+                    El histórico muestra el rendimiento obtenido para cada pregunta.
+                </p>
+                <div class="tip">
+                    Utilice los filtros por Dominio para localizar rápidamente las áreas con menor porcentaje de
+                    acierto.
+                </div>
+            </section>
+            <section id="stats">
+                <h2>Estadísticas</h2>
+                <ul>
+                    <li>Seen</li>
+                    <li>Accuracy</li>
+                    <li>Completed Exams</li>
+                    <li>Average repetitions</li>
+                </ul>
+            </section>
+            <section id="faq">
+                <h2>FAQ</h2>
+                <details>
+                    <summary>
+                        ¿Cómo reinicio las estadísticas?
+                    </summary>
+                    <p>
+                        Utilice el botón Reset Statistics.
+                    </p>
+                </details>
+                <details>
+                    <summary>
+                        ¿Dónde se guardan los datos?
+                    </summary>
+                    <p>
+                        En el LocalStorage del navegador.
+                    </p>
+                </details>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
