@@ -1,4 +1,5 @@
 // ══════════════════════════════════════════════════════════════
+// ---- DEPRECATED FILE: storage.js ---- Codigo trasladado a script.js para centralizarlo.
 // Minsait DIC - Exam Simulator — Fichero de configuración
 // ══════════════════════════════════════════════════════════════
 

@@ -1,4 +1,5 @@
 // ══════════════════════════════════════════════════════════════
+// ---- DEPRECATED FILE: storage.js ---- Codigo trasladado a script.js para centralizarlo.
 // CIS-DF Quiz — Gestión de persistencia y estadísticas
 // Este fichero maneja todo lo que se guarda entre sesiones
 // ══════════════════════════════════════════════════════════════
