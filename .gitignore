@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 # Evitar subir archivos de preguntas al repositorio
 *.json
 *.txt
 *.csv
 questions/
+=======
+# Evitar subir archivos de preguntas al repositorio
+*.json
+*.txt
+*.csv
+questions/
+>>>>>>> 3603bee (Changes)
 preguntas/
